@@ -25,14 +25,14 @@ jobs:
         run: swift build --arch arm64 --configuration release
       - name: Create Directories for Artifacts
         run: mkdir -p ./artifacts
-      - name: Copy x86_64 Binary
-        run: cp -R .build/x86_64-apple-macosx/release/dabadoo ./artifacts/dabadoo_x86_64
-      - name: Copy ARM64 Binary
-        run: cp -R .build/arm64-apple-macosx/release/dabadoo ./artifacts/dabadoo_arm64
+      - name: Create universal binary
+        run: lipo -create -output "dabadoo_universal" ".build/x86_64-apple-macosx/release/dabadoo" ".build/arm64-apple-macosx/release/dabadoo"
+      - name: Copy universal binary
+        run: cp dabadoo_universal ./artifacts/dabadoo
       - name: Upload release
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "./artifacts/*"
+          artifacts: "./artifacts/dabadoo"
           tag: ${{ github.event.inputs.version }}
           prerelease: ${{ github.event.inputs.prerelease == 'true' }}
           name: Release ${{ github.event.inputs.version }}

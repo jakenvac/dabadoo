@@ -41,5 +41,8 @@ observer:
 ```
 
 ## TODO
+- [ ] - Better installation methods
+  - [ ] - Homebrew package
+  - [ ] - Github release
 - [ ] - Yabai Observer - use yabai signals to update borders  
 - [ ] - Background Service settings

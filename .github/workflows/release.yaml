@@ -1,0 +1,39 @@
+
+name: Build and Release macOS Binaries
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version'
+        required: true
+      prerelease:
+        description: 'Mark as Pre-release?'
+        required: false
+        default: 'false'
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - uses: swift-actions/setup-swift@v1
+        with:
+          swift-version: "5.9"
+      - name: Build for x86_64
+        run: swift build --arch x86_64 --configuration release
+      - name: Build for ARM64
+        run: swift build --arch arm64 --configuration release
+      - name: Create Directories for Artifacts
+        run: mkdir -p ./artifacts
+      - name: Copy x86_64 Binary
+        run: cp -R .build/x86_64-apple-macosx/release/dabadoo ./artifacts/dabadoo_x86_64
+      - name: Copy ARM64 Binary
+        run: cp -R .build/arm64-apple-macosx/release/dabadoo ./artifacts/dabadoo_arm64
+      - name: Upload release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "./artifacts/*"
+          tag: ${{ github.event.inputs.version }}
+          prerelease: ${{ github.event.inputs.prerelease == 'true' }}
+          name: Release ${{ github.event.inputs.version }}
+          token: ${{ secrets.RELEASE_TOKEN }}

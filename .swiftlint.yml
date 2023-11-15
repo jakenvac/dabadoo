@@ -1,0 +1,8 @@
+disabled_rules:
+  - todo
+  - trailing_comma
+
+line_length: 100
+
+identifier_name:
+  allowed_symbols: ["_"] 

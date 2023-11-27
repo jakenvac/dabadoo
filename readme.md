@@ -1,3 +1,6 @@
+> [!NOTE]
+> Use [JankyBorders](https://github.com/FelixKratz/JankyBorders) instead.
+
 # Dabadoo
 
 Uh, Yabai Daba Doo? A companion tool for yabai that restores borders. (kinda)
@@ -6,11 +9,17 @@ Uh, Yabai Daba Doo? A companion tool for yabai that restores borders. (kinda)
 > This is one of my first swift projects and is very very alpha. Expect bugs.
 
 ## Installing
-For now there is no real installation method besides running from source.
-You need **Swift 5.9**.
 
-1. Clone the repo
-2. Run the app with `swift run`
+```sh
+  brew tap jakenvac/formulae
+  brew install dabadoo
+
+  # run with
+  dabadoo
+
+  # or configure the service to run automatically
+  brew services start dabadoo
+```
 
 ## Config
 
@@ -27,22 +36,23 @@ appearance:
   border_color: "#FFAACC"
   # Where the border sits relative to the edge of the window
   # can be "inline", "inset", or "outset". Default is "inline".
-  border_position: 'inline'
+  border_position: "inline"
   # If the border is in front or behind the focused window
   # "front" or "back". Default is "back".
-  border_layer: 'back'
+  border_layer: "back"
 
 observer:
   # type can be "timer" or "window". Default is "timer".
   # Note: the window observer is broken
-  type: 'timer'
+  type: "timer"
   # timer_interval is a Double representing the interval in seconds. Default is 0.5.
   timer_interval: 0.5
 ```
 
 ## TODO
+
 - [ ] - Better installation methods
   - [ ] - Homebrew package
   - [ ] - Github release
-- [ ] - Yabai Observer - use yabai signals to update borders  
+- [ ] - Yabai Observer - use yabai signals to update borders
 - [ ] - Background Service settings
